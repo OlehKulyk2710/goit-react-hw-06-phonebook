@@ -1,15 +1,19 @@
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateContacts } from 'redux/actions';
 import shortid from 'shortid';
-import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 import toast from 'react-hot-toast';
 
 const NAME = 'name';
 const NUMBER = 'number';
 
-const ContactForm = ({ contacts, onUpdateContacts }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const contacts = useSelector(state => state.contacts.items);
+  const dispatch = useDispatch();
 
   const handleChange = event => {
     const inputName = event.currentTarget.name;
@@ -45,7 +49,7 @@ const ContactForm = ({ contacts, onUpdateContacts }) => {
     }
 
     const contactData = { id: shortid.generate(), name, number };
-    onUpdateContacts(contactData);
+    dispatch(updateContacts(contactData));
     setName('');
     setNumber('');
   };
@@ -86,12 +90,3 @@ const ContactForm = ({ contacts, onUpdateContacts }) => {
 };
 
 export default ContactForm;
-
-ContactForm.propTypes = {
-  onUpdateContacts: PropTypes.func.isRequired,
-  contactData: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-  }),
-};
