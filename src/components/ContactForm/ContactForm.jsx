@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { updateContacts } from 'redux/actions';
+import { updateContacts } from 'redux/itemsSlice';
 import shortid from 'shortid';
 import css from './ContactForm.module.css';
 import toast from 'react-hot-toast';
